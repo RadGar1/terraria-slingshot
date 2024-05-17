@@ -1,0 +1,60 @@
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
+using Terraria;
+using Terraria.ModLoader;
+using Slingshot.Items.Ammos;
+
+namespace Slingshot.Projectiles
+{
+    public class goldenProjectile : ModProjectile
+    {
+        public override void SetDefaults()
+        {
+			projectile.Name = "Golden Ball"; //Name of the projectile, only shows this if you get killed by it
+			projectile.width = 4; //Set the hitbox width
+			projectile.height = 4; //Set the hitbox height
+			projectile.timeLeft = 600; //The amount of time the projectile is alive for
+			projectile.penetrate = 5; //Tells the game how many enemies it can hit before being destroyed
+			projectile.friendly = true; //Tells the game whether it is friendly to players/friendly npcs or not
+			projectile.hostile = false; //Tells the game whether it is hostile to players or not
+			projectile.tileCollide = true; //Tells the game whether or not it can collide with a tile
+			projectile.ignoreWater = true; //Tells the game whether or not projectile will be affected by water
+			projectile.ranged = true; //Tells the game whether it is a ranged projectile or not
+			projectile.aiStyle = 0; //How the projectile works, this is no AI, it just goes a straight path
+			projectile.light = 0.50f;
+		}
+		int bounce = 0;
+		int maxBounce = 10;
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
+			bounce++;
+			for(int i = 0; i < 3; i++)
+            {
+				Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Gold, 0f, 0f, 0, default(Color), 1f);
+            }
+			if (projectile.velocity.X != oldVelocity.X) projectile.velocity.X = -oldVelocity.X;
+			if (projectile.velocity.Y != oldVelocity.Y) projectile.velocity.Y = -oldVelocity.Y;
+			projectile.aiStyle = 0;
+
+			if (bounce >= maxBounce) return true;
+			else return false;
+		}
+		public override void AI()
+        {
+			Lighting.Brightness(1, 1);
+        }
+		public override void Kill(int timeleft)
+		{
+			if (projectile.owner == Main.myPlayer)
+			{
+				// Drop a javelin item, 1 in 18 chance (~5.5% chance)
+				int item =
+				Main.rand.NextBool(4)
+					? Item.NewItem(projectile.getRect(), ModContent.ItemType<goldenItem>())
+					: 0;
+			}
+		}
+	}
+}
