@@ -1,0 +1,16 @@
+﻿unfinished stuff:
+Vortex Slingshot (primary fire, make original portal disappear after a second one is fired)
+Dawn And Dusk slingshot
+active/explosive rock (might cut)
+shroomite visor
+pirate sniper
+accessories
+dusts/sounds
+angry bird slingshot: souls of flight and feathers, randomly cycles between all birds
+planetary rock: luminite ore, shoots a big projectile with smaller projectiles orbiting it
+
+
+swing sling sprite
+pearl shard sprite
+day rock and night rock sprites
+pirate sniper spritesheet
